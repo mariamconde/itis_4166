@@ -14,7 +14,20 @@ const server = http.createServer((req, res) => {
     //response
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/html');
-    fs.readFile('./index.html', (err, data) => {
+    // generate path to file based on url in request
+    let path = './';
+
+    if (req.url == '/') {
+        path = path + 'index.html';
+    } else if (req.url == '/contact') {
+        path = path + 'contact.html';
+    } else if (req.url == '/about') {
+        path = path + 'about.html';
+    } else {
+        res.statusCode = 404;
+        path = path + '404.html';
+    }
+    fs.readFile(path, (err, data) => {
         if (err) {
             console.log(err);
             res.end();
