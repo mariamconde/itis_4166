@@ -1,0 +1,56 @@
+web server and browser communicates through HTTP protocol
+server responds with HTTP response
+
+- Interret HTTP requests
+- Retrieve requested resource from the abckend
+- Create HTTP response and send it to the client, the response may include
+
+server needs to attatch data in the HTTP response and then send the respinse back to the browser
+
+NodeJS Server
+To create a web server
+//require the module
+const http = requirez('http');
+
+//create a server
+//event emitter: attach event listners to it
+const server = htttp.createServer();
+
+//register an event listners for incoming requests 
+callback function will be called everytime the server recieves a request from the client
+arrow function
+req - header, body of request
+res - add response information and sent back to the client
+server.on('request', (req,res)=> {
+    //handle incomeing request
+});
+
+//bind the server to a particular port number
+//host (domain name), ip address, local host
+//unique port (2 applications cannot have same port)
+server.listen(port, host, ()=>{
+    //opperation after successful binding
+});
+
+Parse HTTP request
+req of the callback function stores the HTTP request
+//req.method - how to get method in http request
+//req.url 
+//req.header - retrieve header fields in the http request message
+
+req is object of incoming message class
+
+Create HTTP response
+//used to manipulate the header, set particular header field, write a whole header
+res of the callback function stores the hTTP response
+res.setHeader(name, value)
+res.writeHead(statusCode [statusMessage][,headers])
+//status code: 200
+statusMessage: 'ok'
+//headers {}
+//used to write information into the data field of the http response (body field)
+res.write()
+//finish and send reponse to the client
+res.end()
+
+res is of the http.ServerResponse class
