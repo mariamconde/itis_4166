@@ -23,7 +23,7 @@ const server = http.createServer((req, res) => {
         path = path + 'contact.html';
     } else if (req.url == '/about') {
         path = path + 'about.html';
-    } else {
+    } else 
         res.statusCode = 404;
         path = path + '404.html';
     }
