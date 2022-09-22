@@ -1,0 +1,46 @@
+what is express?
+web framework built on top of the node http module
+- minimalist (minimal functionalities)
+    - handle request
+    - interpret request message
+    - generate responses
+Does not provide additional functionalities
+    - authenticate users, authorize users use sessions
+    might need to use a 3rd party library to do so
+- unopiniated
+    - does not define how to do certain things
+    - template engines
+As compared to vanilla NODE API, Express
+- provides an easy way to handle routing, interpret requests, and generate responses
+- uses template engine for rendering dynamic HTML views
+- uses middleware for sessions, authenticaton, authorizatiom, input validation, etc
+^ does not support these functionalities (3rd party libraries to implement them)
+
+Install Express package
+
+1. require the Express module
+const express = require('express');
+
+2. create an Express application
+const app = express();
+
+3.  bind the app to a particular port number
+app.listen(port, host, ()=>{
+
+});
+
+Route Handling
+
+express defines routes in the following structure:
+app.Method(path, handler);
+
+Method is an HTTP request method, thus it can be get, post, put, delete, etc
+- path is a path on the server
+- route handlers is a function, which will be executed when the method and path matches incoming request
+
+example:
+
+// handle GET request at '/'
+app.get('/', (req, res)=>{
+    res.send('Hello World!');
+});
