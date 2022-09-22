@@ -1,4 +1,5 @@
 -- What is Express? --
+
 web framework built on top of the node http module
 - minimalist (minimal functionalities)
     - handle request
