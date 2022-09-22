@@ -1,0 +1,41 @@
+-- Request (req) Object --
+
+* Extends the http.IncomingMessage class of Node
+* Provide additional methods and properties for parsing an incoming request message 
+
+
+-- Route Parameters --
+
+* The request URL may contain Parameters
+Request URL: http://localhost:3000/books/34
+^ identify which book is being requested
+
+* To extract the value of route parameters, the route path includes a name at 
+the same position as the parameter in the request URL
+
+Route path: /books/:bookId
+
+* The req.params returns an object containing a name and value pair for each route parameter
+- req.params: {bookId: "34"}
+^ use req.params.bookId to retrieve the value
+
+
+-- Query Strings --
+
+* A query string is text represented as key/value pairs in the URL following a question mark (?)
+after the hostname.
+* The req.query returns an object containing a propery for each query string parameter in the request URL
+
+example:
+URL: localhost:8084/?name=alice&email=alice@abc.com
+req.query: {name:'alice', email:'alice@abc.com'}
+
+
+-- Request Body -- 
+
+* Client may send data to server through the request body in a POST request
+* Body-parser middleware are used to populate body data in req.body
+* req.body returns an object containign key-value pairs of data submitted in the request body
+
+
+

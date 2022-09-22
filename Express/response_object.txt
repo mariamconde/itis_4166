@@ -1,0 +1,24 @@
+-- Response (res) Object -- 
+
+* Extends the http.ServerRepsonse class
+* Provides additional methods to make it easy to generate generate various responses
+
+-- Methods --
+
+res.send([body]): send a response of various types
+- The parameter can be a Buffer object, a String, an object, Boolean, or an Array
+
+res.sendFile(path[, options] [, fn]): send a file at a given path
+- Unless root is set in the option object, path must be an absolute path to the file
+
+res.sendFile('./views/index.html, {root: __dirname});
+
+res.json([body]): send a JSON response
+
+res.render(view [, locals][, callback])
+
+res.redirect([status,] path): redirect a request to the URL derived from the specified path
+- Status deaults to 302, but can be set to other value
+
+res.status(code)
+
