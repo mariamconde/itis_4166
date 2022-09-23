@@ -1,0 +1,66 @@
+-- Middleware --
+
+* A function that is being executed in a request response cycle
+* A middleware function has the following signature:
+
+function (req, res, next)
+
+req: incoming request object
+
+res: outgoing request object
+
+next: a fucntion that calls the next middleware function
+
+-- Middleware Stack -- 
+
+* Middleware fucntions are executed sequentially
+    - The order of the functions matters
+* If the current middleware does not send a response it must call the next one; otherwise, the request will be left hanging 
+
+HTTP Request -> Middleware Function 1 -> next() Middleware Function 2 -> next() Middleware Function 3 -> HTTP Response
+
+* If a middleware function sends a response, it can omit next as the third argument
+
+-- Mount a Middleware Function --
+app.use([path,] function [, function...])
+
+mounts a middleware fucntion ir functions at a given path
+* For each incoming request, if its URL or prefix of the URL matches the path, it executes the middleware fucntions
+    - Different from routes, HTTP method does not matter
+
+* If path is not specified, it defaults to '/' and the middleware function will be executed for every requuest to the app
+
+example:
+app.use('/apple', ((req, res,next)=>{...});
+This middleware function will be executed if the request's URL is '/apple', '/apple/images', '/apple/images/news', executed
+
+app.use((req, res, next) => {});
+This middleware fucntion will be executed for any incoming request
+
+-- Built-in Middleware --
+Express has the following Built-in middleware functions:
+
+SERVING STATIC FILES
+express.static(): returns a middleware fucntion that can be used to serve static files such as images, CSS files and JS files
+* Pass the name of the directory that contains the static files are stored in ./public folder
+app.use(express.static('public'));
+
+BODY-PARSER MIDDLEWARE
+express.urlencoded(): returns a middleware fucntion that parses incoming request request with URL-encoded payloads
+app.use(express.urlencoded({extended: true});
+
+express.json(): returns a middleware fucntion that parses incoming requests with JSON payloads
+app.use(express.json());
+
+** both are availables with Express 4.16.0+ **
+
+THIRD-PARTY MIDDLEWARE
+morgan: logger middlware function, logs incoming request messages 
+method-override
+session
+express-validator
+connect-flash
+helmet
+
+
+
