@@ -1,15 +1,20 @@
 const express = require('express');
 const { v4: uuidv4 } = require('uuid');
 const morgan = require('morgan');
+const ejs = require('ejs');
+
 
 const app = express();
 let port = 3000;
 let host = "localhost";
 
+app.set('view engine', 'ejs');
+
+
 let students = [
-    { id: 1, name: "Alice", major: "Computer Science" },
-    { id: 2, name: "Bob", major: "Biology" },
-    { id: 3, name: "Charlie", major: "Physics" },
+    { id: "1", name: "Alice", major: "Computer Science", gpa: 3.2 },
+    { id: "2", name: "Bob", major: "Biology", gpa: 3.0 },
+    { id: "3", name: "Charlie", major: "Physics", gpa: 3.8 }
 ];
 
 app.use(express.static('public'));
@@ -66,9 +71,12 @@ app.get("/students/:sid", (req, res) => {
     // route parameter
     // console.log(req.params);
     let id = req.params.sid;
-    let student = students.find((element) => element.id === parseInt(id));
+    let student = students.find((element) => element.id === id);
+    // let student = students.find((element) => element.id === parseInt(id));
     // console.log(student);
-    res.json(student);
+    //res.json(student);
+    // can be data 
+    res.render('student', {student: student});
 });
 
 app.get("/about", (req, res) => {
