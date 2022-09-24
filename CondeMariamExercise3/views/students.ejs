@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/css/style.css"
+      <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Student List</title>
+  </head>
+  <body>
+    <h2>Students</h2>
+    <% if(students.length > 0 ) {%>
+    <ul>
+      <% students.forEach((student) => { %>
+      <li><%= student.name %></li>
+      <% }) %>
+    </ul>
+    <% } else { %>
+    <p>There is no student to display</p>
+    <%}%>
+  </body>
+</html>
