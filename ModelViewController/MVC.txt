@@ -1,0 +1,14 @@
+Model View Controller (MVC)
+
+- MVC is an architecutural design patter that is commonly used to structure web applications
+- Makes it easy to structure and organize components in a web app
+- Separates the functionality/components of a web app into 3 interconnected parts
+
+Model - define how data is represented and manipulated
+View- defines user interface (what users see in the browser)
+Controller - (Brain) communicates between model and View
+
+Express MVC App Architecture 
+Routes - foward HTTP request to appropiate Controller
+Controller -  get data or update through models, send data to template engine (generates HTML files based on data and template ) sent to client side through the controller
+
