@@ -1,0 +1,23 @@
+Controllers
+- located in the center of the architecture
+- components that connect everything together
+- usually recieve request from the routes, based on the request read or write data
+- forward data to view template then render to client side
+
+A controller functiin is a callback function in thee routes
+app.get('/stories', (req, res) => {});
+- get all stories from the model
+- pass all stories to template engine (html page)
+- html page returned to the client 
+
+A controller module includes all the callback functions from the same route module
+- naming conventions:
+    - index: GET /stories
+    - new: GET/stories/new
+    - create: POST /stories
+    - show: GET /stories/:id
+    - edit: GET /stories/:id/edit
+    - update: PUT /stories/:id
+    - delete: DELETE /stories/:id
+
+The controller module exports all the controller functions so that they can be used in the route module
