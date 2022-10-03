@@ -1,0 +1,58 @@
+Routes
+HTTP request directed to contollers 
+
+Modularize Routes
+- bigger application need more Routes
+- in the story sharing web app, routes are needed for handling requests for stories, etc
+- instead of including all of the routes in app.js, modularize routes into modules
+- each route module handles requests for a particular type of resource
+
+
+Create a Route Module
+- use the express router object to create route modules: in the new js file
+
+//require the express module 
+const express = require('express);
+
+//create a router object (mini app)
+const router = express.Router();
+
+//crate routes in the module
+router,get('/', (req, res)=>{
+...
+});
+
+//export the router object
+module.exports = router;
+
+Use a Route Module
+In app.js require and mount the route module as a middleware on the app object
+
+//require the route module
+const router = require('router');
+
+//mount the route module which handles all request with the url prefix '/stories'
+app.use('/stories', router);
+
+- all request with '/stores' prefix will be handles by routes defined in this router
+
+RESTful Routes
+- REST stands for REpresentation State Transfer
+- widely used for building web services
+- the RESTful route standard defines 7 routes to support basic CRUD operations on a resource
+- Create, Read, Update, Delete
+
+- Each route includes HTTP method, the name of the resouce and sometimes the id of a particular resource
+
+CREATE/READ
+GET: /stories shows all stories
+GET: /stories/new show an HTML to create a new story
+POST: /stories Create a new story
+GET: /stories/:id show detail of the story identified by id
+
+UPDATE
+GET: /stories/:id/edit show an HTML form to edit the story defined by id
+PUT: /stories/:id update the story identified by id
+
+DELETE
+DELETE: /stories/:id Delete the estory identifies by id
