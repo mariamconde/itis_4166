@@ -1,0 +1,20 @@
+Models
+
+Between database and controller module
+- responsible for managing resouces
+- abstracts each resouce to model objects
+- for each story resouce, we need to convert it to a story object to access and update info etc
+- defines the relationship among different model objects
+- provides an interface to perform CRUD operations on the resource 
+
+Examole
+A story object includes the follwinf fields:
+- id 
+- title
+- content
+- author
+- timestamp
+
+This week, all story objects are stored in array instead of database
+- not persistent
+
