@@ -8,5 +8,7 @@
   },
   "author": "Lijuan Cao",
   "license": "ISC",
-  "dependencies": {}
+  "dependencies": {
+    "luxon": "^3.0.4"
+  }
 }

@@ -1,0 +1,19 @@
+Views
+
+- Include ejs template and static html fields
+- same layout
+
+layout
+- the only difference is the content area
+- nav and footer are the same
+- instead of using the same code, create shared components using partials
+
+partials
+- a partial can be included in other view templates
+- partials are usually stored in '/views/partials' folder
+
+Include partials in other views by calling 
+<%-include ('Relative/PATH/TO/FILE')%>
+
+For example
+<%- iclude ('./partials/header.ejs')%>
