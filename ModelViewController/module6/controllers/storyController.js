@@ -1,5 +1,10 @@
+const model = require('../models/story');
+
 exports.index = (req, res) => {
-    res.send('send all stories');
+    //res.send('send all stories');
+    //res.send(model.find());
+    let stories = model.find();
+    res.render('./story/index', {stories});
 };
 
 

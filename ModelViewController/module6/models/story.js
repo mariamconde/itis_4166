@@ -15,3 +15,4 @@ const stories = [{
 }
 ];
 
+exports.find = () => stories;
