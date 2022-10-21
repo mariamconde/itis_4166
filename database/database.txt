@@ -1,0 +1,48 @@
+To provide persistent data storage, a web application uses databases to store data.
+The following notes gives an introduction to database. In particular, it discusses and 
+compares two types of database: relational vs. NoSQL. 
+
+
+-- Database --
+* used to store a collection of data
+* All access to the database is controlled by the databasr management system  (DBMS)
+
+    Application -> Database Management System  (DBMS) -> Database
+
+
+-- Relational Database --
+* Popular since 1980s
+* Data is organized as a set of tables with columns and rows
+
+* Exponential growth of internet and web applications requires 
+- scale to store, organize and process massive amount of data
+- data can be semi-structured or unstructured
+
+- data is normalized
+- stored in different tables
+- would take a long time to join
+- higher response time 
+- strict schema
+
+relational database usually use verttical scaling method
+horizontal scaling: spread data into several different machines
+
+-- NoSQL Database --
+NoSQL (Not only SQL)
+database are developed as an alternative
+
+* key-value : stored as a kew value pair
+* Graph DB : stored as node in the graph edges descirbe relationship in data
+* Columnn Family : for each column in rlational database stored together, when querying don't need all the information or a particular record
+* Document : documetsn grouped in collectiors
+
+
+- horizontal scaling with replicaton and distribution over commodity servers
+- if application has high volume workloads NoSQL is a better option
+- uses flexible dynamic schema to handle unstructured data
+
+Database for Node/Express applications
+- use any database supported by NODEJS
+- Relational database: PostgreSQL, MySQL, SQLite
+- NoSQL database: Redis, Cassandra, CouchDB, MongoDB, Neo4J
+
