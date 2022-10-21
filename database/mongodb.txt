@@ -1,0 +1,45 @@
+MongoDB
+- Each data record is stored as a document
+- A document is composed of field-and-value pairs
+
+{
+    name: "Sue",
+    age: 26,
+    status: "A",
+    groups: ["news", "sports"]
+}
+
+Documents are stored in collections
+- collections are analogous to tables in relational databases
+- a database contains a set of collections
+
+BSON vs JSON
+
+documents are viewed in JSON format
+{
+    name: "sue",
+    age: 26,
+    status: "A",
+    groups: ["news", "sports"]
+}
+
+Documents are store din BSON form 
+BSON is a binary representation of JSON
+-faster to parse and lighter to store than JSON
+-supports more data types than JSON
+
+_id field
+- every document has a unique _id field, acting as the primary key
+- the _id field can be of any type other than array
+- can always update document but cannot update field
+
+ObjectId values are 12 bytes in length
+- 4 byte timestamp value
+- 5 byte random value
+- 3 byte increment counter
+
+Mongo Shell
+- interactive JavaScript interface to MongoDB, whcih can be used to access MongoDB
+- The mongo shell is included as part of the MongoDB installation
+- To start mongo shell, type mongo in a terminal window
+
