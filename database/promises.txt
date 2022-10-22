@@ -1,0 +1,106 @@
+Asynchronous Operations
+
+* NodeJS uses a single threaded event loop to handle multiple conccurent request
+* To prevent a request from blocking the event loop, call non-javascript operations, such as I/Opasynchronously
+* Callback functions can be used to handle asynchronous calls
+
+A callback function is passed as an argument to an asynchronous function call
+After the asynchronous operatiin finishes executing, it send results or errors through the callback function
+
+function getUser(callback) {
+    if(Math.random() > 0.5) {
+        let user = {id: 1, name: 'Abbie'}
+        callback(null, user);
+        } else {
+            callback('Failed to get the user', null);
+        }
+    }
+
+
+getUser((err, user)=>{
+    if(err) {
+        console.log(err);
+    } else {
+        console.log(user)'
+    }
+});
+
+Callback Hell
+- sometimes need multiple asynchronous operations are executed suquentially, where each 
+subqequent operation starts when the previous operations succeeds, with the result from the 
+previous step
+
+example
+
+getUser((err, user)=>{
+    if(err){
+        return console.log(err);
+    }
+    getName(user, (err, name)=>{
+        if(err) {
+            return console.log(err);
+        } 
+        capitalizeName (name, (err, ucName)=>{
+            if(err) {
+                return console.log(err);
+            }
+            console.log(ucName)'
+        });
+    });
+});
+
+Promise 
+has 3 possible states
+- pending: asynchronous operation has not completed yet
+- fuffiled: asynchronous operation has completed successfully and the promise has the value
+- rejected: as operation has completed with an error
+
+to create a promise, call constructor
+
+promise((resolve, reject) => {
+    //perform asynchronous operations, then
+    // depends on the outcome, call resolve or reject
+})
+
+The constructor takes a function as a parameter,
+which takes 2 callback functions as parameters
+
+- if the asynchronous operation succeeds, resolve() is called with result
+- if there is an error, reject() is called with error
+
+Consume a Promise 
+When a dunction returns a promise, the caller consumes it by calling
+- then(callback): process the results returned by the promise
+- catch(callback): handle the error thrown by the promise
+
+Asynchronous return a promise
+function getUser() {
+    return new Promise((resolve, reject)=> {
+        if(Math.random() > 0,5 {
+            let user = {id: 1, name: 'Abbie'};
+            resolve(user);
+            } else {
+                reject('Failed to get users);
+            }
+        });
+    });
+}
+
+Consume promise
+getUser()
+.then(user=>console.log(user))
+.catch(err=>console.log(err));
+
+Chaining
+Promises can be chained to execute multiple asynchronous oper suquentially
+
+Return a new promoise for the next asynchronous operation in then function
+
+
+getUser()
+.then(user=>getName(user))
+.then(name=>capitalizeName(name))
+.then(ucName)=>console.log(ucName))
+.catch((err)=>{
+    console.log(err);
+});
