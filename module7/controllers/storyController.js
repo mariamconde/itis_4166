@@ -68,12 +68,11 @@ exports.update = (req, res, next) => {
 };
 
 exports.delete = (req, res, next) => {
+    let story = req.body;
     let id = req.params.id;
-    if (model.deleteById(id))
-        res.redirect('/stories');
-    else {
-        let err = new Error('Cannot find a story with id ' + id);
-        err.status = 404;
-        next(err);
-    }
+    model.deleteById(id, story)
+        .then(result => {
+            res.redirect('/stories');
+        })
+        .catch(err => next(err));
 };
