@@ -1,0 +1,28 @@
+Schema Validation
+
+Validators are rules defined in schemas
+Mongoose has serveral built in validators
+
+All SchemaTypes have the required Validators 
+- the field must be provided if required is ser to true
+
+Numbers has min and max validators 
+String have the following validators
+- enum: specifies the set of allowed values for the field
+- match: specifies a regualr expression that the string must match
+- minLength and maxLength
+
+Validation on Insert
+By default, documents are validated before they are saved to the database
+
+Before saving the document, the validate() method is called which chcks validation rules
+
+- if validation rule is violated, save is aborted and the error is return
+- otherwise, the document will be inserted in the database
+- you can set schema's validateBeforeSave to fall to bypass validation
+
+Validate on Update
+supports validation for update operations
+- update validators are off by default, and can be turned on by setting runValidators to true when calling update methods
+
+
