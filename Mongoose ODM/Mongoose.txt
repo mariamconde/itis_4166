@@ -1,0 +1,73 @@
+What is Mongoose?
+
+- popular object document mapper for MongoDB
+- Mongoose is built on top of the MongoDB native Node driver
+- Impose a structure on documents through schema and schema validations
+    - Require documents to follow the same structure and follow the same schema
+- Maps MongoDB documents into objects in the application code
+- Performs type casting
+
+Schema
+- Defines the format for all documents in a collection
+- Defines the properties that the document6s can have 
+    - ex: name (major) , type (string) , default values, validators (rules to validate document s before embedded)
+- Allowed Schema types: String, Number, Date, Buffer, Boolean, Mixed, ObjectId, Arrau
+
+Example
+
+Schema Constructor
+- definition: object describing schema paths 
+- takes 2 arguments
+- options: object describing options
+
+const userSchema = new Schema ({
+    name: String,
+    age: Number
+});
+
+Model
+- compiled schema, which is used to create and access on documents stored in the correspondong collection
+- call mongoose.model() method to create a model
+- the method takes 2 arguments
+    - first argument: name of the model
+    - second argument: name of the schema that the model is based on
+
+
+const userSchema = new Schema ({
+    name: String,
+    age: Number
+});
+
+const User = mongoose.model('User', userSchema)
+
+- Each model corresponds to a collection in the database, and the name of the collection is plural
+  lowercased version of the model name 
+- The correspondong collection name in this example is - users
+
+Constructing documents
+- Instance of a model
+- Create a document by passing JavaScript object as an argument to the model
+- Mongoose will
+    - strip out any properties that are not defined in the schema
+    - cast the values to match the tyoes defined in the schema
+
+Example
+
+const userSchema = new Schema ({
+    name: String,
+    age: Number
+});
+
+const User = mongoose.model('User', userSchema)
+
+const user = new User ({
+    name: 'Billy Pilgrim', 
+    age: '64',
+    rank: 'private'
+});
+
+console.log(user.name); //Billy Pilgrim
+console.log(user.age); //64
+console.log(user.rank); //undefined
+//Mongoose strips out `rank` because it is not defined in the schema
+
