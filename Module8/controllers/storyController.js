@@ -1,8 +1,9 @@
 const model = require('../models/story');
-exports.index = (req, res) => {
+exports.index = (req, res, next) => {
     //res.send('send all stories');
-    let stories = model.find();
-    res.render('./story/index', { stories });
+    model.find()
+        .then(stories => res.render('./story/index', { stories }))
+        .catch(err => next(err));
 };
 
 exports.new = (req, res) => {
@@ -13,9 +14,9 @@ exports.create = (req, res, next) => {
     //res.send('Created a new story');
     let story = new model(req.body);//create a new story document
     story.save()//insert the document to the database
-    .then(story => res.redirect('/stories'))
+        .then(story => res.redirect('/stories'))
         .catch(err => {
-            if(err.name === 'ValidationError') {
+            if (err.name === 'ValidationError') {
                 err.status = 400;
             }
             next(err);
