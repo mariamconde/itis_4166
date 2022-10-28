@@ -1,0 +1,41 @@
+CRUD Operations Using Model
+
+When a model is created with mongoose.model(), the model has an assorciated 
+connection with the MongoDB server
+
+A model can perform CRUD operations on documents in the correspondong collection
+
+Insert documents
+2 ways 
+- first construct a new document, then call save() method on the document
+- call create() method on the model by passing in the JavaScript object(s)
+    - can insert multiple documents with one call
+
+Query documents
+Monggoose model provides three static methods for querying documents
+
+find() - used to query multiple documents satisfying a particular criteria
+findOne() - only return the first document satisfying the criteria
+findById() - only used if your criteria is Id
+
+Note that findById(id) is the same as findOne({_id: id})
+
+Update documents
+Mongoose model provide 4 static method for updating documents
+
+findByIdAndUpdate() - only finds the document matching the Id
+findOneAndUpdate() - buld query criteria 
+- will return the document
+
+updateOne()
+updateMany()
+- only perform the update but will not return the document
+
+Delete documents
+findByIdAndDelete() - delete by document matching particular id
+findOneAndDelete() - delete a document matching query criteria
+- will return the document
+
+deleteOne() - delete document satisfying a particular
+deleteMany() - delete many documents satisfying a particular criteria
+- will not return the document
