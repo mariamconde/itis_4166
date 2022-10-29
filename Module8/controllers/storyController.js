@@ -90,11 +90,23 @@ exports.update = (req, res, next) => {
 
 exports.delete = (req, res, next) => {
     let id = req.params.id;
-    if (model.deleteById(id))
-        res.redirect('/stories');
-    else {
-        let err = new Error('Cannot find a story with id ' + id);
+
+    if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+        let err = new Error('Invalid story id');
         err.status = 404;
-        next(err);
+        return next(err);
     }
+
+    model.findByIdAndDelete(id, { useFindAndModify: false })
+        .then(story => {
+            if (story) {
+                res.redirect('/stories');
+            } else {
+                let err = new Error('Cannot find a story with id ' + id);
+                err.status = 404;
+                return next(err);
+            }
+        })
+        .catch(err => next(err));
 };
+
