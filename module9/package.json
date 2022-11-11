@@ -1,0 +1,29 @@
+{
+  "name": "module9",
+  "version": "1.0.0",
+  "description": "User Integration Demo",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Lijuan Cao",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "luxon": "^3.1.0",
+    "method-override": "^3.0.0",
+    "mongoose": "^5.12.2",
+    "morgan": "^1.10.0",
+    "uuid": "^9.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mariamconde/itis_4166.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mariamconde/itis_4166/issues"
+  },
+  "homepage": "https://github.com/mariamconde/itis_4166#readme"
+}
