@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
+const flash = require('connect-flash');
 const User = require('./models/user');
 //create app
 const app = express();
@@ -36,6 +37,8 @@ app.use(session({
     store: new MongoStore({ mongoUrl: 'mongodb://localhost:27017/demos' })
 }));
 
+app.use(flash());
+
 app.use((req, res, next) => {
     console.log(req.session);
     next();
@@ -61,6 +64,7 @@ app.post('/', (req, res) => {
 
 //get the login form
 app.get('/login', (req, res) => {
+    console.log(req.flash());
     res.render('login');
 });
 
@@ -79,14 +83,17 @@ app.post('/login', (req, res) => {
                     .then(result => {
                         if (result) {
                             req.session.user = user._id;//store user's id in the session
+                            req.flash('success', 'You have successfully logged in');
                             res.redirect('/profile');
                         } else {
-                            console.log('wrong password')
+                            //console.log('wrong password')
+                            req.flash('error', 'Wrong password');
                             res.redirect('/login')
                         }
                     })
             } else {
-                console.log('wrong email address');
+                //console.log('wrong email address');
+                req.flash('error', 'Wrong email address');
                 res.redirect('/login');
             }
         })
@@ -96,6 +103,7 @@ app.post('/login', (req, res) => {
 //get profile
 app.get('/profile', (req, res, next) => {
     let id = req.session.user;
+    console.log(req.flash());
     User.findById(id)
         .then(user => res.render('profile', { user }))
         .catch(err => next(err));
