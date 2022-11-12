@@ -37,10 +37,6 @@ app.use(session({
 }));
 
 app.use((req, res, next) => {
-    if (!req.session.counter)
-        req.session.counter = 1;
-    else
-        req.session.counter++;
     console.log(req.session);
     next();
 });
@@ -82,6 +78,7 @@ app.post('/login', (req, res) => {
                 user.comparePassword(password)
                     .then(result => {
                         if (result) {
+                            req.session.user = user._id;//store user's id in the session
                             res.redirect('/profile');
                         } else {
                             console.log('wrong password')
@@ -97,8 +94,21 @@ app.post('/login', (req, res) => {
 });
 
 //get profile
-app.get('/profile', (req, res) => {
-    res.render('profile');
+app.get('/profile', (req, res, next) => {
+    let id = req.session.user;
+    User.findById(id)
+        .then(user => res.render('profile', { user }))
+        .catch(err => next(err));
+});
+
+//logout the user
+app.get('/logout', (req, res, next) => {
+    req.session.destroy(err => {
+        if (err)
+            return next(err);
+        else
+            res.redirect('/');
+    });
 });
 
 app.use((req, res, next) => {
