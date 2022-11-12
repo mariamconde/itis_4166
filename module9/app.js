@@ -41,6 +41,8 @@ app.use(flash());
 
 app.use((req, res, next) => {
     console.log(req.session);
+    res.locals.successMessages = req.flash('success');
+    res.locals.errorMessages = req.flash('error');
     next();
 });
 
@@ -87,13 +89,13 @@ app.post('/login', (req, res) => {
                             res.redirect('/profile');
                         } else {
                             //console.log('wrong password')
-                            req.flash('error', 'Wrong password');
+                            req.flash('error', 'Wrong password!');
                             res.redirect('/login')
                         }
                     })
             } else {
                 //console.log('wrong email address');
-                req.flash('error', 'Wrong email address');
+                req.flash('error', 'Wrong email address!');
                 res.redirect('/login');
             }
         })
