@@ -1,0 +1,162 @@
+MongoDB captures relationships between data in 2 ways:
+
+Embeded model: stores related data in a single document
+
+pros:
+- retrieve all related data with a single query
+- avoid expensive join operations
+cons:
+- large documents, May exceed 16 MB document size limit
+- may not fit for all query critera
+
+Normalozed mode: reference the _id related data from a different collection
+pros: 
+- smaller documents
+- flexible queries
+cons: 
+- multiple queries or join operation is needed to query all related data
+
+
+-- Data Modeling --
+In MongoDB 
+an entity is modeled as a document
+an attribute of an entity is modeled as a field of the document
+
+A relationship may exist between entities
+
+one to one relationship
+one to many relationship - each review correspons to one product (e commerce website example)
+many to many relationship
+
+MongoDB captures relationships between data with
+embedded model: stores related data in a single document
+normalized model: store related data in seperate documents, and reference the _id field of one document in the other
+
+embedded model has the best performance
+normalized models provides more flexibilty for query
+
+one-to-one relationship------------------------------------------------
+using embedded model for one to one relationship unless the document 
+exeeds the maximum document size of 16MB
+
+example each theater has an addres. the theater document embeds its address as a subdocument
+{
+    _id: "5959843784379493743",
+    capacity: 1000,
+    address: {
+        street1: "45235 Worth Ave.",
+        city: "California",
+        state: "MD",
+        zipcode: 20619
+    }
+
+}
+one-to-many relationship-----------------------------------------------------------
+example: each book has a publisher and a publisher may publish multiple books
+
+publisher 1:m book
+
+embed "one" inside many as a subdocument
+embed "many" as an array of subdocuments in "one"
+store _id of "many" as an array inside "one"
+store _id of "one" inside "many"
+
+Embed one inside many------------------------------------------
+embedding the publsher as a subdocument in each book document
+there are duplicated data
+any changes to a publisher required updation all of its books 
+{
+    title: "MongoDB: The Definitive Guide",
+    author: [ "Kristina Chodorow", "Mike Dirolf" ],
+    published_date: ISODate("2010-09-24"),
+    pages: 216,
+    language: "English"
+    publisher: {
+        name: "O'Reilly Media",
+        founded: 1980,
+        location: "CA"
+    }
+}
+
+{
+    title: "50 Tips and Tricks for MongoDB Developer",
+    author: "Kristina Chodorow",
+    published_date: ISODate("2011-05-06"),
+    pages: 68,
+    language: "English"
+    publisher: {
+        name: "O'Reilly Media",
+        founded: 1980,
+        location: "CA"
+    }
+}
+Embed Many Inside one--------------------------------------------------------
+Embedding the books as an array of subdocuments in the publisher document
+Easy to find all books published by a publisher
+Disadvantages:
+Not easy to find all books written by a particular author 
+The document may exceed the maximum document size of 16MB
+
+Reference Many in one--------------------------------------------------
+store books and publishers in seperate collections
+store the _id of books in an array in the publisher document
+Disadvantage: If the number of books per publisher is unbounded, 
+this data model would lead to mutable, growing arrays
+
+{
+    name: "O'Reilly Media",
+    founded: 1989,
+    location: "CA",
+    books: [123456789, 234567890, ...]
+}
+
+{
+    _id: 234567890,
+    title: "50 Tips and Tricks for MongoDB Developer",
+    author: Kristina Chodorow",
+    published_date: ISODate("2011-05-06"),
+    pages: 68,
+    language: "English"
+}
+{
+    _id: 123456789,
+    title: "MongoDB The Definitive Guide",
+    author: [ "Kristina Chodorow", "Mike Dirolf" ],
+    published_date: ISODate("2010-09-24"),
+    pages: 216,
+    language: "English"
+}
+
+Reference one in many---------------------------------------------
+store books and publishers in seperate collections
+store the _id of the publisher in the book document
+Advantage: no data duplication
+
+
+{
+    _id: "oreilly",
+    name: "O'Reilly Media",
+    founded: 1989,
+    location: "CA"
+}
+
+{
+    _id: 123456789,
+    title: "MongoDB The Definitive Guide",
+    author: [ "Kristina Chodorow", "Mike Dirolf" ],
+    published_date: ISODate("2010-09-24"),
+    pages: 216,
+    language: "English",
+    publisher_id: "oreilly"
+}
+
+Use embedded model for 
+one-to-one relationship: unless limited by 16MB constraints
+
+one-to-many relationship: when the "many" documets always appear with or are views in the context of "one" document
+and embedding "many" as an array of subdocuments in "one" does not exeeds the maximum document size
+
+Use reference model otherwise
+ flexible query is needed 
+ the embedded documents are unbounded in a one-to-many relationship
+ many-to-many relationships
