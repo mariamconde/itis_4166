@@ -1,0 +1,26 @@
+ASSOCIATE USERS AND STORIES
+
+Relationships between Users and Stories----------------------------------------------------------------
+- A user may create may create multiple stories
+- A story has one author
+
+User 1:m Story
+- Embedded user inside story is not a good choice as there will be data duplication
+- Embed story inside use is not a good choice as stories are not always viewed together with Users
+- Reference stories inside user will result in a mutable array
+- We will model this relationships by reference the user inside story documents
+
+Story Schema---------------------------------------------------------------------------------------------------------------------
+- If a fiels of a document stores the _id of a document in another collection, then the field is defined with two properties:
+- type: schema.Types.ObjectId
+- ref: model name
+- Example : 
+the story schema's author field stores the _id of its author
+author: { type: Schema.Types.ObjectId, ref: 'User'},
+
+Join Collections--------------------------------------------------------------------------------------------------------------------------
+- MongoDB supports join operations to combine the fields of two documents from different collections
+- In Mongoose, call populate() method on a documet automatically replaces a field in the document with document from other collection
+- Example : 
+story.findById(id).populate('author')
+story.findById(id).populate('author', 'firstName')
