@@ -1,0 +1,55 @@
+AUTHORIZATION
+The process that checks if a user is permitted to access a resource or perform an action
+
+- For example Gmail only allows authenticated users to access their emails
+- Depending on the business logic the authorization rules may vary from one to another
+- Let's take the story telling app as an example to define a set of authorization rules
+
+AUTHORIZATION RULES 1
+Everyone can access
+- landing page
+- stories page
+- sory detail page
+
+No access control is needed for accessing these pages
+
+AUTHORIZATION RULES 2
+Guests can access 
+- new account page
+- login page
+Guest can
+- signup a new account
+- login to the app
+
+If a user is a guest (not loggged in), then the user can access these pages and perform these actions
+Otherwise the user is redirected to the profile page
+
+AUTHORIZATION RULES 3
+Authenticated users can access
+- profile page
+- new story page
+Authenticated users can
+- create a new story
+- logout
+
+If a user is logged in, then the user can access these pages and perform these actions
+Otherwise the user is redirected to the login page
+
+AUTHORIZATION RULES 4
+An authenticated user who creates a story can access
+- the edit story page
+An authenticated user who creates a story can 
+- edit the story
+- delete the story
+
+If a user is logged in and is the author of the story, then the user can acess these pages 
+and perform these actions
+
+Otherwise, the user is redirected to 
+- the login page if not logged in 
+- the error page if logged in but the author of the story
+
+If a user is logged in and is the author of the story, then the user can acess these pages and perform these actions
+Otherwise, the user is redirected to
+- the login page if not logged in
+- the error page if logged in but not the author of the story
