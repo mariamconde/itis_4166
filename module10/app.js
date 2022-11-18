@@ -18,15 +18,15 @@ let host = 'localhost';
 app.set('view engine', 'ejs');
 
 //connect to database
-mongoose.connect('mongodb://localhost:27017/demos', 
-                {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
-.then(()=>{
-    //start app
-    app.listen(port, host, ()=>{
-        console.log('Server is running on port', port);
-    });
-})
-.catch(err=>console.log(err.message));
+mongoose.connect('mongodb://localhost:27017/demos',
+    { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
+    .then(() => {
+        //start app
+        app.listen(port, host, () => {
+            console.log('Server is running on port', port);
+        });
+    })
+    .catch(err => console.log(err.message));
 
 //mount middlware
 app.use(
@@ -34,26 +34,27 @@ app.use(
         secret: "ajfeirf90aeu9eroejfoefj",
         resave: false,
         saveUninitialized: false,
-        store: new MongoStore({mongoUrl: 'mongodb://localhost:27017/demos'}),
-        cookie: {maxAge: 60*60*1000}
-        })
+        store: new MongoStore({ mongoUrl: 'mongodb://localhost:27017/demos' }),
+        cookie: { maxAge: 60 * 60 * 1000 }
+    })
 );
 app.use(flash());
 
 app.use((req, res, next) => {
     //console.log(req.session);
+    res.locals.user = req.session.user || null;
     res.locals.errorMessages = req.flash('error');
     res.locals.successMessages = req.flash('success');
     next();
 });
 
 app.use(express.static('public'));
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(morgan('tiny'));
 app.use(methodOverride('_method'));
 
 //set up routes
-app.get('/', (req, res)=>{
+app.get('/', (req, res) => {
     res.render('index');
 });
 
@@ -68,13 +69,13 @@ app.use((req, res, next) => {
 
 });
 
-app.use((err, req, res, next)=>{
+app.use((err, req, res, next) => {
     console.log(err.stack);
-    if(!err.status) {
+    if (!err.status) {
         err.status = 500;
         err.message = ("Internal Server Error");
     }
 
     res.status(err.status);
-    res.render('error', {error: err});
+    res.render('error', { error: err });
 });
