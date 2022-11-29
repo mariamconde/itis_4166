@@ -1,0 +1,19 @@
+Authentication
+
+The process of verifying the user is who they claim to be. There are safety measures that we must implement 
+to secure user authentication.
+
+User name must be stored case insensitive
+- when a user signs up, convert the user name to lower case before storing it in the database
+- when a user logs in, convert the user name to lower case and comparw it the one stored in the database
+
+Enforce password strength requirements
+- min password length should be at least 8 characters
+- max password length should be at least 64 characters
+
+Store passwords in a secure fashion
+- store hashed and salted passwords instead of plaintext passwords, eg use bcrypt to hash the passwords
+
+Limit authentication requests to protect against network based guessing attacks
+- express-rate-limit package can be used to limit repeated authentication requests
+
