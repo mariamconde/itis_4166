@@ -32,3 +32,7 @@ exports.validateResult = (req, res, next) => {
         return next();
     }
 }
+
+exports.validateStory =
+    [body('title', "Title cannot be empty").notEmpty().trim().escape(),
+    body('content', "Content must have a minimum of 10 characters").trim().escape()];
