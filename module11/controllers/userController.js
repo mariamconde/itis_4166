@@ -1,3 +1,4 @@
+const { validationResult } = require('express-validator');
 const model = require('../models/user');
 const Story = require('../models/story');
 
@@ -35,7 +36,13 @@ exports.getUserLogin = (req, res, next) => {
 }
 
 exports.login = (req, res, next) => {
-
+    let errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        errors.array().forEach(error => {
+            req.flash('error', error.msg);
+        });
+        return res.redirect('back');
+    }
     let email = req.body.email;
     if (email)
         email = email.toLowerCase();
