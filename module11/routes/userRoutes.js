@@ -1,8 +1,8 @@
 const express = require('express');
-const { body } = require('express-validator');
 const controller = require('../controllers/userController');
 const { isGuest, isLoggedIn } = require('../middlewares/auth');
 const { logInLimiter } = require('../middlewares/rateLimiters');
+const { validateSignUp, validateLogIn, validateResult } = require('../middlewares/validator');
 
 const router = express.Router();
 
@@ -11,15 +11,11 @@ router.get('/new', isGuest, controller.new);
 
 //POST /users: create a new user account
 router.post('/', isGuest, controller.create);
-
 //GET /users/login: send html for logging in
-router.get('/login', isGuest, controller.getUserLogin);
+router.get('/login', isGuest, validateSignUp, validateResult, controller.getUserLogin);
 
 //POST /users/login: authenticate user's login
-router.post('/login', logInLimiter,
-    [body('email', 'Email must be a valid email address').isEmail().trim().escape().normalizeEmail(),
-    body('password', 'Password must be at least 8 characters and at most 64 characters ').isLength({ mim: 8, max: 64 })],
-    isGuest, controller.login);
+router.post('/login', logInLimiter, isGuest, validateLogIn, validateResult, controller.login);
 
 //GET /users/profile: send user's profile page
 router.get('/profile', isLoggedIn, controller.profile);
