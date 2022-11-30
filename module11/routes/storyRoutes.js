@@ -17,7 +17,7 @@ router.post('/', isLoggedIn, validateStory, controller.create);
 //GET /stories/:id: send details of story identified by id
 router.get('/:id', validateId, controller.show);
 
-//GET /stories/:id/edit: send html form for editing an exising story
+//GET /stories/:id/edit: send html form for editing an existing story
 router.get('/:id/edit', validateId, isLoggedIn, isAuthor, controller.edit);
 
 //PUT /stories/:id: update the story identified by id
